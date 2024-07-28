@@ -7,6 +7,9 @@ const initialState = {
   movieDetail: {},
   movieCredits: [],
   movieSimilar: [],
+  personDetail: {},
+  personCredits: [],
+  searchResults: [],
   loading: false,
   error: false,
 };
@@ -16,7 +19,7 @@ const movieSlice = createSlice({
   initialState,
   reducers: {
     setTrendingState: (state, action) => {
-      console.log('action:', action);
+      state.trending = action.payload;
     },
     setUpcomingState: (state, action) => {
       state.upcoming = action.payload;
@@ -33,6 +36,15 @@ const movieSlice = createSlice({
     setSimilarMoviesState: (state, action) => {
       state.movieSimilar = action.payload;
     },
+    setPersonDetailState: (state, action) => {
+      state.personDetail = action.payload;
+    },
+    setPersonMovieCreditsState: (state, action) => {
+      state.personCredits = action.payload;
+    },
+    setSearchResultsState: (state, action) => {
+      state.searchResults = action.payload;
+    },
   },
 });
 
@@ -43,6 +55,9 @@ export const {
   setMovieDetailState,
   setMovieCreditState,
   setSimilarMoviesState,
+  setPersonDetailState,
+  setPersonMovieCreditsState,
+  setSearchResultsState,
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

@@ -7,13 +7,30 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {AppScreens} from '../navigation/types';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {GetSearchMovies} from '../app/actions/movieAction';
+import {useDispatch, useSelector} from 'react-redux';
+import {getSearchResultsState} from '../app/movieSelector';
+import MovieListItem from '../components/MovieListItem';
 const SearchScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    // const searchTextModified = searchText
+    //   .trim()
+    //   .toLowerCase()
+    //   .replace(/\s+/g, '');
+
+    dispatch(GetSearchMovies(searchText));
+  }, [searchText, dispatch]);
+
+  const searchResults = useSelector(getSearchResultsState());
 
   return (
     <SafeAreaView className="bg-neutral-800 flex-1">
@@ -31,13 +48,31 @@ const SearchScreen = () => {
         </TouchableOpacity>
       </View>
 
-      {/*  veri bulunamadıysa ekrana bastırılacak  */}
-      {/* <View className="items-center justify-center">
-        <Image
-          source={require('./../assets/images/movieTime.png')}
-          className="w-96 h-96"
-        />
-      </View> */}
+      {searchResults?.length > 0 && (
+        <ScrollView
+          contentContainerStyle={{
+            paddingHorizontal: 15,
+            paddingBottom: 30,
+          }}>
+          <Text className="text-white font-semibold ml-1 my-2">
+            Result Length: {searchResults?.length}
+          </Text>
+          <View className="flex-row flex-wrap justify-between px-5">
+            {searchResults.map((movie, index) => (
+              <MovieListItem searchPage movie={movie} key={index} />
+            ))}
+          </View>
+        </ScrollView>
+      )}
+
+      {searchResults?.length === 0 && (
+        <View className="items-center justify-center">
+          <Image
+            source={require('./../assets/images/movieTime.png')}
+            className="w-96 h-96"
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };

@@ -21,6 +21,8 @@ import {
 } from '../app/movieSelector';
 import BackAndFavorite from '../components/BackAndFavorite';
 import LinearGradient from 'react-native-linear-gradient';
+import Cast from '../components/Cast';
+import MovieList from './MovieList';
 
 const MovieScreen = () => {
   const {id} = useRoute().params;
@@ -38,7 +40,7 @@ const MovieScreen = () => {
 
   return (
     <ScrollView className="flex-1 bg-neutral-900 ">
-      <BackAndFavorite isAbsolute />
+      <BackAndFavorite isAbsolute movie={movieDetail} />
       <View>
         <Image
           source={{
@@ -72,7 +74,9 @@ const MovieScreen = () => {
         {movieDetail?.genres?.map((genre, index) => {
           let shotDot = index + 1 !== movieDetail?.genres?.length;
           return (
-            <Text className="text-neutral-400 font-semibold text-base">
+            <Text
+              key={index}
+              className="text-neutral-400 font-semibold text-base">
               {genre.name}
               {shotDot && ' |'}{' '}
             </Text>
@@ -83,6 +87,12 @@ const MovieScreen = () => {
       <Text className="text-neutral-400 mx-4 mt-2 tracking-wide">
         {movieDetail?.overview}
       </Text>
+      {/* cast */}
+      {movieCredits?.length > 0 && <Cast data={movieCredits} />}
+      {/* similar movies */}
+      {similarMovies?.length > 0 && (
+        <MovieList title={'Similar Movies'} data={similarMovies} hideSeeAll />
+      )}
     </ScrollView>
   );
 };

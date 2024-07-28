@@ -1,7 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {
   getMovieCredits,
+  getMovieCreditsPerson,
   getMovieDetails,
+  getPersonDetails,
+  getSearchMovies,
   getSimilarMovies,
   getTopRatedMovies,
   getTrendingMovies,
@@ -10,6 +13,9 @@ import {
 import {
   setMovieCreditState,
   setMovieDetailState,
+  setPersonDetailState,
+  setPersonMovieCreditsState,
+  setSearchResultsState,
   setSimilarMoviesState,
   setTopRatedState,
   setTrendingState,
@@ -20,7 +26,6 @@ export const GetTrendingMovies = createAsyncThunk(
   'movie/getTrendingMovies',
   async (_, {dispatch}) => {
     const response = await getTrendingMovies();
-
     dispatch(setTrendingState(response.results));
   },
 );
@@ -60,5 +65,30 @@ export const GetSimilarMoviesState = createAsyncThunk(
   async (id, {dispatch}) => {
     const response = await getSimilarMovies(id);
     dispatch(setSimilarMoviesState(response.results));
+  },
+);
+
+export const GetPersonDetails = createAsyncThunk(
+  'movie/getPersonDetails',
+  async (id, {dispatch}) => {
+    const response = await getPersonDetails(id);
+    dispatch(setPersonDetailState(response));
+  },
+);
+
+export const GetMovieCreditsPerson = createAsyncThunk(
+  'movie/getMovieCreditsPerson',
+  async (id, {dispatch}) => {
+    const response = await getMovieCreditsPerson(id);
+    dispatch(setPersonMovieCreditsState(response.cast));
+  },
+);
+
+export const GetSearchMovies = createAsyncThunk(
+  'movie/getSearchMovies',
+  async (id, {dispatch}) => {
+    const response = await getSearchMovies(id);
+
+    dispatch(setSearchResultsState(response.results));
   },
 );

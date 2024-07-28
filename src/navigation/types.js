@@ -4,4 +4,5 @@ export const AppScreens = {
   Person: 'PersonScreen',
   Favorites: 'FavoritesScreen',
   Search: 'SearchScreen',
+  Tab: 'Tab',
 };

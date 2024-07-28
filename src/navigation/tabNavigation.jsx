@@ -15,7 +15,7 @@ export const TabNavigation = () => {
         tabBarInactiveTintColor: '#8c8c8c',
         tabBarStyle: {
           backgroundColor: '#404040',
-          // paddingVertical: 13,
+          paddingVertical: 13,
         },
       }}>
       <Tab.Screen
@@ -24,7 +24,7 @@ export const TabNavigation = () => {
             <Icon name="home" color={color} size={size} />
           ),
         }}
-        name={AppScreens.Home}
+        name={AppScreens.Tab}
         component={StackNavigation}
       />
       <Tab.Screen
